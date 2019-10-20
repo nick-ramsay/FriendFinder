@@ -1,5 +1,5 @@
 var friends = [{
-    "name": "Gary",
+    "name": "Gary Eucalyptus",
     "photo": "https://www.abc.net.au/news/image/11546806-3x2-700x467.jpg",
     "scores": [
         5,
