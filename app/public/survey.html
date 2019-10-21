@@ -163,14 +163,14 @@
                     var completed = true;
                     $(".form-control").each(function () {
                         if ($(this).val() === "") {
-                            completed = false;
+                            completed = true;
                         }
                     });
 
                     $(".custom-select").each(function () {
 
                         if ($(this).val() === "") {
-                            completed = false;
+                            completed = true;
                         }
                     });
                     return completed;
@@ -179,18 +179,20 @@
                 switch(questionsCompleted()) {
                     case true:
                         var newFriend = {
-                            "name": $("#name").val(),
-                            "photo": $("#photo").val(),
-                            "scores": []
+                            name: $("#name").val(),
+                            photo: $("#photo").val(),
+                            scores: []
                         };
                         var answers = [];
                         for (i = 1; i <= 10; i++) {
                             newFriend.scores.push(parseInt($("#q" + i).val()));
                         };
-
-                        console.log(newFriend);
+                        $.post("/api/friends", newFriend, function(data) {
+                        });
+                        break;
                     case false:
                         alert("Please fill out all the fields.");
+                        break;
                 }
             });
         </script>
