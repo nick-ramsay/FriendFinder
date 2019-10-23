@@ -6,10 +6,15 @@ module.exports = function (app) {
     return res.json(friends.friends[0]);
   });
 
-  app.post("/api/friends", function (req, res) {
-    var newFriend = req.body;
-    //console.log(newFriend);
-    console.log(res.send);
+  app.post("/api/friends", function (req,res) {
+    var newFriendData = req.body;
+    console.log(req.body);
+    console.log("apiRoutes.js post...");
+    console.log(newFriendData);
+    friends.friends.push(newFriendData);
+    //friends.friends.push("Push works!");
+    console.log(friends.friends);
+    return res.json(newFriendData);
   });
 
 };
