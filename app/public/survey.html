@@ -142,17 +142,19 @@
                 <option value="4">4</option>
                 <option value="5">5 (Strongly Agree)</option>
             </select>
-            <div class="modal" id="optimalFriend" tabindex="-1" role="dialog">
+            <div class="modal" id="optimalFriend" tabindex="-1" role="dialog" style="text-align: center;">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title">Modal title</h5>
+                            <h3 class="modal-title" style="font-weight:bold;">Congrats! Your best friend is...</h3>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
                         <div class="modal-body">
-                            <p>Modal body text goes here.</p>
+                            <h3 id="friendName"></h3>
+                            <img id="friendImage" class="img-thumbnail">
+                            <p id="friendMessage" style="font-style: italic;"></p>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
@@ -177,52 +179,63 @@
         <script>
             $(".surveyBtn").on("click", function (event) {
                 var newFriend = {
-                            name: $("#name").val(),
-                            photo: $("#photo").val(),
-                            scores: [
-                                $('#q1').val(),
-                                $('#q2').val(),
-                                $('#q3').val(),
-                                $('#q4').val(),
-                                $('#q5').val(),
-                                $('#q6').val(),
-                                $('#q7').val(),
-                                $('#q8').val(),
-                                $('#q9').val(),
-                                $('#q10').val()
-                            ]
-                        };
-                var completed;
+                    name: $("#name").val(),
+                    photo: $("#photo").val(),
+                    scores: [
+                        $('#q1').val(),
+                        $('#q2').val(),
+                        $('#q3').val(),
+                        $('#q4').val(),
+                        $('#q5').val(),
+                        $('#q6').val(),
+                        $('#q7').val(),
+                        $('#q8').val(),
+                        $('#q9').val(),
+                        $('#q10').val()
+                    ]
+                };
                 function questionsCompleted() {
+                    var completed = true;
                     $(".form-control").each(function () {
                         if ($(this).val() === "") {
-                            completed = true;
+                            completed = false;
                         }
                     });
 
                     $(".custom-select").each(function () {
 
                         if ($(this).val() === "") {
-                            completed = true;
+                            completed = false;
                         }
                     });
                     return completed;
                 };
                 switch (questionsCompleted()) {
                     case true:
-                        console.log(newFriend);
-                        $.post("/api/friends", JSON.stringify({newFriend: newFriend}))
+                        $.post("/api/friends", { newFriend: newFriend })
                             .then(function (data) {
-                                //console.log("add.html", data);
-                                console.log(data);
-                                alert("Adding new friend...");
+                                $("#friendName").text(data.name);
+                                $("#friendImage").attr("src", data.photo);
+                                $("#friendMessage").text('"' + data.message + '"');
                             });
+                        $('#optimalFriend').modal('toggle');
+                        $('#name').val("");
+                        $('#photo').val("");
+                        $('#q1').val("");
+                        $('#q2').val("");
+                        $('#q3').val("");
+                        $('#q4').val("");
+                        $('#q5').val("");
+                        $('#q6').val("");
+                        $('#q7').val("");
+                        $('#q8').val("");
+                        $('#q9').val("");
+                        $('#q10').val("");
                         break;
                     case false:
                         alert("Please fill out all the fields.");
                         break;
-                }
-                $('#optimalFriend').modal('toggle');
+                };
             });
         </script>
     </div>
