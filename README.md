@@ -6,7 +6,7 @@ Heroku Deployment: https://afternoon-savannah-83215.herokuapp.com/
 - As a social media user, I find it difficult to connect with ideal friends online.
 
 ## Overview
-- This is a survey application which will allow users to complete a set of answers to 
+- This is a survey application which will allow users to find an optimal friend. This is done by having users complete a survey and then compare the results of the user's survey against the answers provided by prior users on their surveys.
 
 ## Installation & Prerequisites
 
